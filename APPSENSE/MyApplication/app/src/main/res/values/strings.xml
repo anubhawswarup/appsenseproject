@@ -11,4 +11,15 @@
     <string name="mot">Motion Unlocker</string>
     <string name="title_activity_sav11">sav11</string>
     <string name="title_activity_sav12">sav12</string>
+    <string name="current">CURRENT LIMIT</string>
+    <string name="Cut">Cut off Time in Hours</string>
+    <string name="Submit">Submit</string>
+    <string name="title_activity_test">test</string>
+    <string name="currentX">Current X</string>
+    <string name="currentY">Current Y</string>
+    <string name="currentZ">Current Z</string>
+    <string name="maxX">Maximum X</string>
+    <string name="maxY">Maximum Y</string>
+    <string name="maxZ">Maximum Z</string>
+    <string name="test">TEST</string>
 </resources>

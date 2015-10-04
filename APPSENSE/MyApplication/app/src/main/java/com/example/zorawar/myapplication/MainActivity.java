@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static Button but_mot;
     private static Button but_sav;
+    private static Button but_test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,29 +26,35 @@ public class MainActivity extends AppCompatActivity {
 
             but_mot=(Button)findViewById(R.id.but_mot);
             but_sav=(Button)findViewById(R.id.but_sav);
+            but_test=(Button)findViewById(R.id.but_test);
+
           but_mot.setOnClickListener(
-                  new  View.OnClickListener()
-                  {
-                      public void onClick(View v){
-                          Intent i=new Intent("com.example.zorawar.myapplication.mot11");
+                  new View.OnClickListener() {
+                      public void onClick(View v) {
+                          Intent i = new Intent("com.example.zorawar.myapplication.mot11");
                           startActivity(i);
                       }
                   }
-        );
+          );
+
         but_sav.setOnClickListener(
-                new  View.OnClickListener()
-                {
-                    public void onClick(View v){
-                        Intent i=new Intent("com.example.zorawar.myapplication.sav11");
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent i = new Intent("com.example.zorawar.myapplication.sav11");
                         startActivity(i);
                     }
                 }
         );
 
-
+        but_test.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent i = new Intent("com.example.zorawar.myapplication.test");
+                        startActivity(i);
+                    }
+                }
+        );
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
