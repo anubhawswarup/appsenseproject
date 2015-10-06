@@ -132,7 +132,7 @@ public class test extends Activity implements SensorEventListener {
                 lastUpdate = curTime;
                 Toast.makeText(getApplicationContext(),"time: "+lastUpdate,Toast.LENGTH_SHORT).show();
             }
-        v.vibrate(100);
+        v.vibrate(50);
         }
         }
 
