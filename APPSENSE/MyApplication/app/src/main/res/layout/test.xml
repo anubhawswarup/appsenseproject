@@ -1,71 +1,49 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.zorawar.myapplication.test">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/currentX"
-        android:id="@+id/currentX"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="20dp" />
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello"
+            android:id="@+id/textView2"
+            android:padding="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/textazimuth"
+            android:layout_alignStart="@+id/textazimuth" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/currentY"
-        android:id="@+id/currentY"
-        android:layout_below="@+id/currentX"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="20dp" />
+            android:id="@+id/textpitch"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Pitch: "
+        android:padding="20dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="81dp"
+        android:layout_marginStart="81dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textazimuth"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/currentZ"
-        android:id="@+id/currentZ"
-        android:layout_below="@+id/currentY"
-        android:layout_centerHorizontal="true" />
+        android:text="Azimuth: "
+        android:padding="20dp"
+        android:layout_above="@+id/textpitch"
+        android:layout_alignLeft="@+id/textpitch"
+        android:layout_alignStart="@+id/textpitch" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textroll"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/maxX"
-        android:id="@+id/maxX"
-        android:layout_marginBottom="185dp"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/maxY"
-        android:layout_alignStart="@+id/maxY" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/maxY"
-        android:id="@+id/maxY"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:layout_alignTop="@+id/maxX"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/maxZ"
-        android:id="@+id/maxZ"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:layout_below="@+id/maxY"
-        android:layout_alignLeft="@+id/maxY"
-        android:layout_alignStart="@+id/maxY"
-        android:layout_marginTop="51dp" />
-
+        android:text="Roll: "
+        android:padding="20dp"
+        android:layout_below="@+id/textpitch"
+        android:layout_alignLeft="@+id/textpitch"
+        android:layout_alignStart="@+id/textpitch" />
 </RelativeLayout>
+
+

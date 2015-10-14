@@ -223,12 +223,16 @@
     <string name="currentX">Current X</string>
     <string name="currentY">Current Y</string>
     <string name="currentZ">Current Z</string>
+    <string name="current_time">Current time</string>
+    <string name="hello">HELLO</string>
     <string name="hello_world">Hello world!</string>
     <string name="inc">Inc. Alarm</string>
+    <string name="large">Large Text</string>
     <string name="maxX">Maximum X</string>
     <string name="maxY">Maximum Y</string>
     <string name="maxZ">Maximum Z</string>
     <string name="mot">Motion Unlocker</string>
+    <string name="newlimit">New Cut off Limit</string>
     <string name="pro">Profile changer</string>
     <string name="sav">Save Data</string>
     <string name="set">Settings</string>

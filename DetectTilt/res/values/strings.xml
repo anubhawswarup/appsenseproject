@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DetectTilt</string>
+    <string name="title_activity_main">Ahotbrew.com - Forward And Backward Tilt</string>
+
+</resources>

@@ -22,4 +22,8 @@
     <string name="maxY">Maximum Y</string>
     <string name="maxZ">Maximum Z</string>
     <string name="test">TEST</string>
+    <string name="hello">HELLO</string>
+    <string name="newlimit">New Cut off Limit</string>
+    <string name="large">Large Text</string>
+    <string name="current_time">Current time</string>
 </resources>

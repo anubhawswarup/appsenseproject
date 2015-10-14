@@ -1,7 +1,179 @@
 package com.example.zorawar.myapplication;
 
+import java.util.List;
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import static java.lang.Math.abs;
+
+public class test extends Activity implements SensorEventListener
+{
+    TextView textviewAzimuth, textviewPitch, textviewRoll;
+    private static SensorManager mySensorManager;
+    private boolean sersorrunning;
+    SharedPreferences sensorvalues;
+
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.test);
+        textviewAzimuth = (TextView) findViewById(R.id.textazimuth);
+        textviewPitch = (TextView) findViewById(R.id.textpitch);
+        textviewRoll = (TextView) findViewById(R.id.textroll);
+        sensorvalues=getSharedPreferences("Mydata",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sensorvalues.edit();
+        editor.putLong("lastupdatingtime",System.currentTimeMillis());
+        editor.commit();
+
+        mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        List<Sensor> mySensors = mySensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+
+        if (mySensors.size() > 0)
+        {
+            mySensorManager.registerListener(mySensorEventListener, mySensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
+            sersorrunning = true;
+            Toast.makeText(this, "Start ORIENTATION Sensor", Toast.LENGTH_LONG).show();
+        } else
+        {
+            Toast.makeText(this, "No ORIENTATION Sensor", Toast.LENGTH_LONG).show();
+            sersorrunning = false;
+            finish();
+        }
+
+    }
+
+    public boolean phonemoved(SensorEvent event)
+    {
+        sensorvalues=getSharedPreferences("Mydata",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sensorvalues.edit();
+        Float lastX=sensorvalues.getFloat("Azimuth",0.0f);
+        Float lastY=sensorvalues.getFloat("Pitch",0.0f);
+        Float lastZ=sensorvalues.getFloat("Roll",0.0f);
+        if ( (abs(event.values[0] - lastX) > 5) || ((abs(event.values[1] - lastY) > 5)) || ((abs(event.values[2] - lastZ) > 5)) )
+        {
+
+            editor.putLong("lastupdatingtime",System.currentTimeMillis());
+            editor.putFloat("Azimuth", event.values[0]);
+            editor.putFloat("Pitch", event.values[1]);
+            editor.putFloat("Roll", event.values[2]);
+            editor.commit();
+            Toast.makeText(getBaseContext(),"MOVED",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private SensorEventListener mySensorEventListener = new SensorEventListener()
+    {
+
+        @Override
+        public void onSensorChanged(SensorEvent event)
+        {
+            Long time=System.currentTimeMillis();
+            Long lastupdate=sensorvalues.getLong("lastupdatingtime", 0l);
+            Long convertedtime=sensorvalues.getLong("convertedtime",0l);
+
+            if(phonemoved(event))
+            {
+                if( (time-lastupdate) < convertedtime )
+                {
+                    Toast.makeText(getBaseContext(), "MOVED,less_time_limit", Toast.LENGTH_SHORT).show();
+                }
+                    textviewAzimuth.setText("Azimuth: " + String.valueOf(event.values[0]));
+                    textviewPitch.setText("Pitch: " + String.valueOf(event.values[1]));
+                    textviewRoll.setText("Roll: " + String.valueOf(event.values[2]));
+
+            }
+            else
+            {
+                if( (time-lastupdate) > convertedtime )
+                {
+                    Toast.makeText(getBaseContext(),"No Movement,time_more_limit",Toast.LENGTH_SHORT).show();
+                }
+                if((time-lastupdate) < convertedtime )
+                {
+                    Toast.makeText(getBaseContext(),"time:"+String.valueOf(time)+" lastupdate:"+ String.valueOf(lastupdate),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(),"No Movement,time_less_limit",Toast.LENGTH_SHORT).show();
+                }
+            }
+            // TODO Auto-generated method stub
+
+
+
+
+
+          //  textviewAzimuth.setText("Azimuth: " + String.valueOf(event.values[0]));
+           // textviewPitch.setText("Pitch: " + String.valueOf(event.values[1]));
+            //textviewRoll.setText("Roll: " + String.valueOf(event.values[2]));
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy)
+        {
+            // TODO Auto-generated method stub
+
+        }
+    };
+
+    @Override
+    protected void onDestroy()
+    {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+
+        if (sersorrunning)
+        {
+            mySensorManager.unregisterListener(mySensorEventListener);
+            Toast.makeText(test.this, "unregisterListener", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event)
+    {
+// TODO Auto-generated method stub
+     /*   if (populatenewvalues(event))
+        {
+            textviewAzimuth.setText("Azimuth: " + String.valueOf(event.values[0]));
+            textviewPitch.setText("Pitch: " + String.valueOf(event.values[1]));
+            textviewRoll.setText("Roll: " + String.valueOf(event.values[2]));
+        }
+
+        Long time=System.currentTimeMillis();
+        Long lastupdate=sensorvalues.getLong("lastupdatingtime",0);
+        Long convertedtime=sensorvalues.getLong("convertedtime",0);
+        if((time - lastupdate) > convertedtime)
+        {
+            Toast.makeText(getBaseContext(),"DATA OFF",Toast.LENGTH_LONG).show();
+        }*/
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i)
+    {
+
+    }
+}
+
+/*package com.example.zorawar.myapplication;
+
         import android.app.Activity;
         import android.content.Context;
+
         import android.hardware.Sensor;
         import android.hardware.SensorEvent;
         import android.hardware.SensorEventListener;
@@ -11,8 +183,11 @@ package com.example.zorawar.myapplication;
         import android.widget.TextView;
         import android.widget.Toast;
 
+
+
+
 public class test extends Activity implements SensorEventListener {
-        public float lastX, lastY, lastZ;
+        public Float lastX, lastY, lastZ;
         private SensorManager sensorManager;
         private Sensor accelerometer;
         private float deltaXMax = 0;
@@ -51,7 +226,8 @@ public class test extends Activity implements SensorEventListener {
 //initialize vibration
 
         }
-            public void initializeViews() {
+            public void initializeViews()
+            {
 
                 currentX=(TextView) findViewById(R.id.currentX);
                 currentY =(TextView) findViewById(R.id.currentY);
@@ -59,9 +235,24 @@ public class test extends Activity implements SensorEventListener {
                 maxX=(TextView) findViewById(R.id.maxX);
                 maxY=(TextView) findViewById(R.id.maxY);
                 maxZ=(TextView) findViewById(R.id.maxZ);
+                // Create object of SharedPreferences.
+
+
 //                lastX=Float.parseFloat(currentX.getText().toString());
   //              lastY=Float.parseFloat(currentY.getText().toString());
     //            lastZ=Float.parseFloat(currentZ.getText().toString());
+
+
+           /*     SharedPreferences preferences= getDefaultSharedPreferences(this);
+                //now get Editor
+                SharedPreferences.Editor editor= preferences.edit();
+                //put your value
+                editor.putFloat("lastX", lastX);
+                editor.putFloat("lastY", lastY);
+                editor.putFloat("lastZ", lastZ);
+                //commits your edits
+                editor.commit();
+
             }
 
 
@@ -88,8 +279,10 @@ public class test extends Activity implements SensorEventListener {
          super.onPause();
          sensorManager.unregisterListener(this);
          }
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+  @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy)
+        {
+
         }
         @Override
         public void onSensorChanged(SensorEvent event) {
@@ -99,13 +292,17 @@ public class test extends Activity implements SensorEventListener {
 
 
             // clean current values
-            displayCleanValues();
+        displayCleanValues();
             // display the current x,y,z accelerometer values
-            displayCurrentValues(event);
+        displayCurrentValues(event);
             // display the max x,y,z accelerometer values
-            displayMaxValues();
+        displayMaxValues();
 
             // get the change of the x,y,z values of the accelerometer
+
+
+
+
             deltaX = Math.abs(lastX - event.values[0]);
             deltaY = Math.abs(lastY - event.values[1]);
             deltaZ = Math.abs(lastZ - event.values[2]);
@@ -117,6 +314,8 @@ public class test extends Activity implements SensorEventListener {
                 deltaY = 0;
             if (deltaZ < vibrateThreshold)
                 deltaZ = 0;
+
+
             lastX = event.values[0];
             lastY = event.values[1];
             lastZ = event.values[2];
@@ -148,9 +347,22 @@ public void displayCurrentValues(SensorEvent event)
         currentX.setText(Float.toString(event.values[0]));
         currentY.setText(Float.toString(event.values[1]));
         currentZ.setText(Float.toString(event.values[2]));
+    SharedPreferences preferences= getSharedPreferences("mypref", 0);
+    preferences.Editor editor=preferences.edit();
+    //now get Editor
+    Float curX=preferences.getFloat("lastX",0.0f);
+    Float curZ=preferences.getFloat("lastZ", 0.0f);
+    Float curY=preferences.getFloat("lastY", 0.0f);
+    //put your value
+    editor.putFloat("lastX", event.values[0]);
+    editor.putFloat("lastY", event.values[1]);
+    editor.putFloat("lastZ", event.values[2]);
+    //commits your edits
+    editor.commit();
 }
 
 // display the max x,y,z accelerometer values
+
 public void displayMaxValues()
 {
         if(deltaX > deltaXMax)
@@ -171,4 +383,4 @@ public void displayMaxValues()
             maxZ.setText(Float.toString(deltaZMax));
         }
 }
-}
+}*/
